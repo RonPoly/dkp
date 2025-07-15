@@ -67,28 +67,33 @@ end
 --If i'm in a raid and no externals are in, all is sent to Guild anyway
 --If there are up to 3 external, all output is sent to Guild, and a copy is sent to each external thru whisper channel
 --If there are more than 3 external, all is sent to the Raid channel. Live communications and External's Note are sent by copy to the Guild Channel.
-function QDKP2sync_RouteMsg(Msg,Priority)
-	local Channel
-	if not QDKP2_IsRaidPresent() then Channel="GUILD"; end
-	else
-		local ExtRaidMembers=QDKP2_GetExtRaidMembers()
-		if ExtRaidMembers<=3 then
-			for i=1,table.getn(ExtRaidMembers) do
-				local ExtName=ExtRaidMembers[i]
-				QDKP2sync_SendAddonMsg(Priority,Msg,"WHISPER",ExtName)
-			end
-			Channel="GUILD"
-		else
-			local Type,Player=QDKP2sync_ParseMsg(Msg)
-			if Priority=="NORMAL" or Priority=="ALERT" or (Type==QDKP2sync_TYPE_NOTES and QDKP2_IsExternal(Player)) then
-				QDKP2sync_SendAddonMsg(Priority, Msg, "GUILD")
-				if Priority=="BULK" then QDKP2sync_BandWEaten(Msg)
-			end
-			Channel="RAID"
-		end
-	end
-	QDKP2sync_SendAddonMsg(Priority, Msg, Channel)
-	if Priority=="BULK" then QDKP2sync_BandWEaten(Msg)
+function QDKP2sync_RouteMsg(Msg, Priority)
+    local Channel
+    if not QDKP2_IsRaidPresent() then
+        Channel = "GUILD"
+    else
+        local ExtRaidMembers = QDKP2_GetExtRaidMembers()
+        if ExtRaidMembers <= 3 then
+            for i = 1, table.getn(ExtRaidMembers) do
+                local ExtName = ExtRaidMembers[i]
+                QDKP2sync_SendAddonMsg(Priority, Msg, "WHISPER", ExtName)
+            end
+            Channel = "GUILD"
+        else
+            local Type, Player = QDKP2sync_ParseMsg(Msg)
+            if Priority == "NORMAL" or Priority == "ALERT" or (Type == QDKP2sync_TYPE_NOTES and QDKP2_IsExternal(Player)) then
+                QDKP2sync_SendAddonMsg(Priority, Msg, "GUILD")
+                if Priority == "BULK" then
+                    QDKP2sync_BandWEaten(Msg)
+                end
+            end
+            Channel = "RAID"
+        end
+    end
+    QDKP2sync_SendAddonMsg(Priority, Msg, Channel)
+    if Priority == "BULK" then
+        QDKP2sync_BandWEaten(Msg)
+    end
 end
 
 
@@ -99,17 +104,18 @@ end
 
 
 -- Interface to ChatThrottleLib
-function QDKP2sync_SendAddonMsg(Priority,Msg,Channel,SubChannel)
-	if Priority=="ALERT" then
-		QDKP2_Debug(1,"Sync","Sent ALERT packet to "..tostring(Channel).."/"..tostring(SubChannel))
-		QDKP2_Debug(1,"Sync",Msg)
-	elseif Priority=="NORMAL" then
-		QDKP2_Debug(2,"Sync","Sent NORMAL packet to "..tostring(Channel).."/"..tostring(SubChannel))
-		QDKP2_Debug(2,"Sync",Msg)
-	elseif Priority=="BULK" then
-		QDKP2_Debug(3,"Sync","Sent BULK packet to "..tostring(Channel).."/"..tostring(SubChannel))
-		QDKP2_Debug(3,"Sync",Msg)
-	ChatThrottleLib:SendAddonMessage(Priority, "QDKP_"..tostring(QDKP2_DBREQ), Msg, Channel,SubChannel)
+function QDKP2sync_SendAddonMsg(Priority, Msg, Channel, SubChannel)
+    if Priority == "ALERT" then
+        QDKP2_Debug(1, "Sync", "Sent ALERT packet to " .. tostring(Channel) .. "/" .. tostring(SubChannel))
+        QDKP2_Debug(1, "Sync", Msg)
+    elseif Priority == "NORMAL" then
+        QDKP2_Debug(2, "Sync", "Sent NORMAL packet to " .. tostring(Channel) .. "/" .. tostring(SubChannel))
+        QDKP2_Debug(2, "Sync", Msg)
+    elseif Priority == "BULK" then
+        QDKP2_Debug(3, "Sync", "Sent BULK packet to " .. tostring(Channel) .. "/" .. tostring(SubChannel))
+        QDKP2_Debug(3, "Sync", Msg)
+    end
+    ChatThrottleLib:SendAddonMessage(Priority, "QDKP_" .. tostring(QDKP2_DBREQ), Msg, Channel, SubChannel)
 end
 
 -------------------------------------------------------------------------
@@ -285,4 +291,5 @@ end
 function QDKP2sync_BandWEaten(Msg)
 	QDKP2sync_RecBytes=QDKP2sync_RecBytes + string.len(Msg) + 12
 end
+
 

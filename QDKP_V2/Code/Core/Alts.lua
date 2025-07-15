@@ -37,7 +37,7 @@ function QDKP2_MakeAlt(alt,main,sure)
   end
   if not main then
     QDKP2_Debug(2,"Core","Clearing alt relation for "..alt)
-    if not QDKP2_IsAlt(alt) then QDKP2_Msg(name.." is not an alt."); return; end
+    if not QDKP2_IsAlt(alt) then QDKP2_Msg(alt.." is not an alt."); return; end
     QDKP2altsRestore[alt]=""
 
     --QDKP2alts[alt]=nil

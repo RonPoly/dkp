@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 30300
 ## Title: Quick DKP V2 - Config
 ## Author: rb@belloli.net
 ## Version: 2.7.2

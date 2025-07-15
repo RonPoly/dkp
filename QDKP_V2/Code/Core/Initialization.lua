@@ -172,11 +172,11 @@ function QDKP2_Init()
   pcall(function() QDKP2libs.InventoryBabble=LibStub:GetLibrary("LibBabble-Inventory-3.0"); end)
   QDKP2libs.Timer=LibStub:GetLibrary("AceTimer-3.0")
   QDKP2libs.CheckTimer=LibStub:GetLibrary("AceTimer-3.0")
-  local TesteDiCazzo={}  --Variable's name says all (in italian). This is what I think about CallbackHandler developers.
-  QDKP2_Events= QDKP2libs.Events:New(TesteDiCazzo)
-  QDKP2_Events["RegisterCallback"]=TesteDiCazzo["RegisterCallback"]
-  QDKP2_Events["UnregisterCallback"]=TesteDiCazzo["UnregisterCallback"]
-  QDKP2_Events["UnregisterAllCallbacks"]=TesteDiCazzo["UnregisterAllCallbacks"]
+  local CallbackProxy={}  --Wrapper used to expose CallbackHandler methods.
+  QDKP2_Events= QDKP2libs.Events:New(CallbackProxy)
+  QDKP2_Events["RegisterCallback"]=CallbackProxy["RegisterCallback"]
+  QDKP2_Events["UnregisterCallback"]=CallbackProxy["UnregisterCallback"]
+  QDKP2_Events["UnregisterAllCallbacks"]=CallbackProxy["UnregisterAllCallbacks"]
   pcall(function() QDKP2bossEnglish=QDKP2libs.BossBabble:GetReverseLookupTable(); end)
   pcall(function() QDKP2classEnglish=QDKP2libs.ClassBabble:GetReverseLookupTable(); end)
   pcall(function() QDKP2zoneEnglish=QDKP2libs.ZoneBabble:GetReverseLookupTable(); end)

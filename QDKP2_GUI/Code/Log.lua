@@ -63,7 +63,9 @@ myClass.History={}
 
 
 function myClass.OnLoad(self)
-  myClass.Frame=_G["QDKP2_Frame5"]
+  -- Store the frame passed by XML so we can reference it even if globals
+  -- aren't available yet during early initialisation.
+  myClass.Frame = self or _G["QDKP2_Frame5"]
   myClass.MenuFrame = CreateFrame("Frame", "QDKP2_Frame5_DropDownMenu", myClass.Frame , "UIDropDownMenuTemplate")
   myClass.SubMenuFrame = CreateFrame("Frame", "QDKP2_Frame5_DropDownSubMenu", myClass.MenuFrame , "UIDropDownMenuTemplate")
 end
@@ -72,19 +74,24 @@ end
 
 
 function myClass.Show(self)
+  -- Ensure the frame reference exists even if OnLoad hasn't fired yet.
+  myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+  if not myClass.Frame then return end
   QDKP2_Toggle(5, true)
   myClass:Refresh()
 end
 
 function myClass.Hide(self)
-	QDKP2_FramesOpen[5]=false
-	if myClass.Frame:IsShown() then
-		myClass.Frame:Hide()
-	end
+        myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+        QDKP2_FramesOpen[5]=false
+        if myClass.Frame and myClass.Frame:IsShown() then
+                myClass.Frame:Hide()
+        end
 end
 
 function myClass.Toggle(self)
-  if myClass.Frame:IsVisible() then
+  myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+  if myClass.Frame and myClass.Frame:IsVisible() then
     myClass:Hide()
   else
     myClass:Show()
@@ -93,7 +100,8 @@ end
 
 
 function myClass.Refresh(self,doNotUpdate)
-  if not myClass.Frame:IsVisible() then return; end
+  myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+  if not myClass.Frame or not myClass.Frame:IsVisible() then return; end
   QDKP2_Debug(3, "GUI-Log","Refreshing")
 
   myClass.ViewClass=myClass.LogViews[myClass.Type]
@@ -188,11 +196,15 @@ function myClass.ShowPlayer(self,name)
     QDKP2_Debug(1,"GUI-Log","Trying to show the log of an inexisting guild player: "..tostring(name))
     return
   end
+  myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+  if not myClass.Frame then return end
   myClass.Frame:Show()
   myClass:SelectPlayer(name)
 end
 
 function myClass.ShowRaid(self,name)
+  myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+  if not myClass.Frame then return end
   myClass.Frame:Show()
   myClass:SelectPlayer('RAID')
 end
@@ -286,7 +298,8 @@ function myClass.GoTo(self,Type,MainSelection,SubListID,ID,resetHistory)
   myClass.Selected=nil
   myClass.ShowingTooltip=nil
   myClass.ViewClass=myClass.LogViews[myClass.Type]
-  if not myClass.Frame:IsVisible() then return; end
+  myClass.Frame = myClass.Frame or _G["QDKP2_Frame5"]
+  if not myClass.Frame or not myClass.Frame:IsVisible() then return; end
   local doNotUpdate
   if SubListID or ID then
     QDKP2_Debug(2,"GUI-Log","Updating Log within the goto function.")

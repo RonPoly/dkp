@@ -14,18 +14,11 @@ local major = "LibGraph-2.0"
 local minor = 90000 + tonumber(("$Revision: 45 $"):match("(%d+)"))
 
 
---Search for just Addon\\ at the front since the interface part often gets trimmed
---Do this before anything else, so if it errors, any existing loaded copy of LibGraph-2.0
---doesn't get modified with a newer revision (this one)
-local TextureDirectory
-do
-	local path = string.match(debugstack(1,1,0), "AddOns\\(.+)LibGraph%-2%.0%.lua")
-	if path then
-		TextureDirectory = "Interface\\AddOns\\"..path
-	else
-		error(major.." cannot determine the folder it is located in because the path is too long and got truncated in the debugstack(1,1,0) function call")
-	end
-end
+-- The original library attempts to determine its installation path using
+-- `debugstack`. This fails when the path in the stack trace is truncated, which
+-- prevents the XML files from loading correctly. We hardcode the texture
+-- directory to avoid the lookup failing on some clients.
+local TextureDirectory = "Interface\\AddOns\\QDKP2_GUI\\Libs\\LibGraph-2.0\\"
 
 
 if not LibStub then error(major .. " requires LibStub") end

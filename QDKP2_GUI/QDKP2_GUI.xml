@@ -60,7 +60,7 @@
         self:EnableKeyboard(false);
         self:RegisterForDrag("LeftButton");
         self:RegisterForClicks("LeftButtonUp");
-      </OnLoad>>
+      </OnLoad>
       <OnDragStart>
         if (arg1 == "LeftButton" and IsShiftKeyDown()) then
         self:StartMoving();

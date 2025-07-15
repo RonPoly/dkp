@@ -5,7 +5,7 @@
 ## Notes: Configure options for QDKP2. Needs the core addon.
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## Dependencies: QDKP_V2
+## Dependencies: QDKP_V2, QDKP2_GUI
 ## SavedVariables: QDKP2_Config_DB
 
 QDKP2_Config.xml

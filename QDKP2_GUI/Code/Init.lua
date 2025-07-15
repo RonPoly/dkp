@@ -52,19 +52,20 @@ function QDKP2_ChatEdit_InsertLink(...)
 end
 
 --RAZ101019_START 
--- Basic LDB support 
-local ldb = LibStub("LibDataBroker-1.1") 
-local launcher = ldb:NewDataObject( "QDKP", { 
-type = "data source", 
-text = "QuickDKP Launcher V2", 
-icon = "Interface\\Addons\\QDKP2_GUI\\Arts\\LogoSmall.tga", 
-OnLeave = Block_OnLeave, 
-OnClick = function(self, button) 
-if button == "LeftButton" then 
-QDKP2_Toggle_Main() 
-elseif button == "RightButton" then 
-QDKP2GUI_Roster:Toggle() 
-end 
-end, 
-} ) 
+local ldb = LibStub:GetLibrary("LibDataBroker-1.1", true)
+if ldb then
+  ldb:NewDataObject("QDKP", {
+  type = "data source",
+  text = "QuickDKP Launcher V2",
+  icon = "Interface\\Addons\\QDKP2_GUI\\Arts\\LogoSmall.tga",
+  OnLeave = Block_OnLeave,
+  OnClick = function(self, button)
+  if button == "LeftButton" then
+  QDKP2_Toggle_Main()
+  elseif button == "RightButton" then
+  QDKP2GUI_Roster:Toggle()
+  end
+  end,
+  } )
+end
 --RAZ101019_END 

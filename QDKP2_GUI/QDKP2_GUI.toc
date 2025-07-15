@@ -1,4 +1,4 @@
-## Interface: 30305
+## Interface: 30300
 ## Title: Quick DKP V2 - GUI
 ## Author: jay_2uk@quickdkp.com
 ## Version: 2.7.5

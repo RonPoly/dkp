@@ -1,4 +1,4 @@
-﻿-- Copyright 2010 Riccardo Belloli (rb@belloli.net)
+-- Copyright 2010 Riccardo Belloli (rb@belloli.net)
 -- Localization file made by Daniel Valero (valerodaniel@free.fr)
 -- This file is a part of QDKP_V2 (see about.txt in the Addon's root folder)
 

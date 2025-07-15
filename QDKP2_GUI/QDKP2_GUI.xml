@@ -1498,6 +1498,41 @@
         </OnClick>
       </Scripts>
     </CheckButton>
+
+    <!-- Filters -->
+    <EditBox name="QDKP2_frame2_SearchName" inherits="InputBoxTemplate">
+      <Size><AbsDimension x="90" y="20"/></Size>
+      <Anchors>
+        <Anchor point="BOTTOMLEFT">
+          <Offset><AbsDimension x="20" y="40"/></Offset>
+        </Anchor>
+      </Anchors>
+      <Scripts>
+        <OnTextChanged>QDKP2GUI_Roster:Refresh(true)</OnTextChanged>
+      </Scripts>
+    </EditBox>
+    <EditBox name="QDKP2_frame2_SearchClass" inherits="InputBoxTemplate">
+      <Size><AbsDimension x="70" y="20"/></Size>
+      <Anchors>
+        <Anchor point="LEFT" relativeTo="QDKP2_frame2_SearchName" relativePoint="RIGHT">
+          <Offset><AbsDimension x="5" y="0"/></Offset>
+        </Anchor>
+      </Anchors>
+      <Scripts>
+        <OnTextChanged>QDKP2GUI_Roster:Refresh(true)</OnTextChanged>
+      </Scripts>
+    </EditBox>
+    <EditBox name="QDKP2_frame2_SearchRank" inherits="InputBoxTemplate">
+      <Size><AbsDimension x="70" y="20"/></Size>
+      <Anchors>
+        <Anchor point="LEFT" relativeTo="QDKP2_frame2_SearchClass" relativePoint="RIGHT">
+          <Offset><AbsDimension x="5" y="0"/></Offset>
+        </Anchor>
+      </Anchors>
+      <Scripts>
+        <OnTextChanged>QDKP2GUI_Roster:Refresh(true)</OnTextChanged>
+      </Scripts>
+    </EditBox>
 -->
 
       <EditBox name="QDKP2_Frame2_Bid_Item" inherits="InputBoxTemplate">
@@ -2857,6 +2892,33 @@
         QDKP2_modify_log_entry_linkText2:SetTextColor(1, 1, 1)
       </OnLoad>
     </Scripts>
+  </Frame>
+
+  <Frame name="QDKP2_Frame6" inherits="QDKP2DialogTitled">
+    <Size><AbsDimension x="220" y="160"/></Size>
+    <Anchors>
+      <Anchor point="CENTER" />
+    </Anchors>
+    <Frames>
+      <Button name="$parent_Close" inherits="UIPanelCloseButton">
+        <Anchors><Anchor point="TOPRIGHT"><Offset><AbsDimension x="-4" y="-4"/></Offset></Anchor></Anchors>
+        <Scripts><OnClick>QDKP2GUI_AltEditor:Hide()</OnClick></Scripts>
+      </Button>
+      <Frame name="QDKP2_frame6_List">
+        <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-30"/></Offset></Anchor></Anchors>
+      </Frame>
+      <EditBox name="QDKP2_frame6_Search" inherits="InputBoxTemplate">
+        <Size><AbsDimension x="110" y="20"/></Size>
+        <Anchors><Anchor point="BOTTOMLEFT"><Offset><AbsDimension x="20" y="20"/></Offset></Anchor></Anchors>
+        <Scripts><OnEnterPressed>QDKP2GUI_AltEditor:AddAlt()</OnEnterPressed></Scripts>
+      </EditBox>
+      <Button name="QDKP2_frame6_Add" inherits="UIPanelButtonTemplate" text="Add">
+        <Size><AbsDimension x="50" y="20"/></Size>
+        <Anchors><Anchor point="LEFT" relativeTo="QDKP2_frame6_Search" relativePoint="RIGHT"><Offset><AbsDimension x="5" y="0"/></Offset></Anchor></Anchors>
+        <Scripts><OnClick>QDKP2GUI_AltEditor:AddAlt()</OnClick></Scripts>
+      </Button>
+    </Frames>
+    <Scripts><OnLoad>QDKP2GUI_AltEditor:OnLoad(self)</OnLoad></Scripts>
   </Frame>
 </Ui>
 

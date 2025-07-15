@@ -305,13 +305,32 @@ function myClass.PupulateList(self)
 		self.List=temp
 	end
   if QDKP2GUI_HideOffline and self.Sel == 'guild' then
-		local temp={}
-		for i,name in pairs(self.List) do
-			if QDKP2online[name] and  not QDKP2_IsExternal(name) then table.insert(temp,name); end
-		end
-		self.List=temp
+                local temp={}
+                for i,name in pairs(self.List) do
+                        if QDKP2online[name] and  not QDKP2_IsExternal(name) then table.insert(temp,name); end
+                end
+                self.List=temp
   end
+  self:ApplyFilters()
   QDKP2_Debug(2, "GUI-Roster","List populated. Voices="..tostring(#self.List))
+end
+
+function myClass.ApplyFilters(self)
+  local nf = string.lower(QDKP2_frame2_SearchName:GetText() or "")
+  local cf = string.lower(QDKP2_frame2_SearchClass:GetText() or "")
+  local rf = string.lower(QDKP2_frame2_SearchRank:GetText() or "")
+  if nf=="" and cf=="" and rf=="" then return end
+  local out={}
+  for _,name in ipairs(self.List) do
+    local add=true
+    if nf~="" and not string.find(string.lower(name), nf, 1, true) then add=false end
+    local cls=string.lower(QDKP2class[name] or "")
+    if cf~="" and not string.find(cls, cf, 1, true) then add=false end
+    local rnk=string.lower(tostring(QDKP2rank[name] or ""))
+    if rf~="" and not string.find(rnk, rf, 1, true) then add=false end
+    if add then table.insert(out,name); end
+  end
+  self.List=out
 end
 
 
@@ -672,6 +691,11 @@ AltMake={text="Make alt",func=function()
   end
 end
 },
+AltEdit={text="Edit Alts",func=function()
+  if #myClass.SelectedPlayers==1 then
+    QDKP2GUI_AltEditor:ShowPlayer(myClass.SelectedPlayers[1])
+  end
+end},
 ExternalAdd={text="Add External",
 func=function()
   QDKP2_NewExternal()
@@ -882,6 +906,7 @@ function myClass.PlayerMenu(self,List)
     if QDKP2_IsAlt(name) then table.insert(menu,2,LogVoices.AltClear)
     else table.insert(menu,2,LogVoices.AltMake)
     end
+    table.insert(menu,3,LogVoices.AltEdit)
     if managing and (QDKP2_IsStandby(name) or not QDKP2_IsInRaid(name)) then
       table.insert(menu,2,LogVoices.StandbyAdd)
     end

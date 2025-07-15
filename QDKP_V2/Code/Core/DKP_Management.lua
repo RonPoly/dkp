@@ -225,7 +225,7 @@ local function HoursTick()
         local noreason
         if not (online or QDKP2_GIVEOFFLINE) then
           reasonNo=QDKP2LOG_NODKP_OFFLINE
-        elseif not (InZone or QDKP2_GIVEOUTZONE) then
+        elseif not (inzone or QDKP2_GIVEOUTZONE) then
           reasonNo=QDKP2LOG_NODKP_ZONE
         end
         if reasonNo then

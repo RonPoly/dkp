@@ -17,22 +17,31 @@ Toolbox.EditPlayers={}
 -------------------- Window management ------------------------
 
 function Toolbox.Show(self)
+  self.Frame = self.Frame or _G["QDKP2_Frame3"]
+  if not self.Frame then return end
   self.Frame:Show()
-  self.Refresh()
+  self:Refresh()
 end
 
 function Toolbox.Hide(self)
-  self.Frame:Hide()
+  self.Frame = self.Frame or _G["QDKP2_Frame3"]
+  if self.Frame then
+    self.Frame:Hide()
+  end
   SetAmounts:Hide()
   Toolbox:SetLootCharge()
 end
 
 function SetAmounts.Hide(self)
-  self.Frame:Hide()
+  self.Frame = self.Frame or _G["QDKP2_Frame4"]
+  if self.Frame then
+    self.Frame:Hide()
+  end
 end
 
 function Toolbox.Toggle(self)
-  if self.Frame:IsVisible() then
+  self.Frame = self.Frame or _G["QDKP2_Frame3"]
+  if self.Frame and self.Frame:IsVisible() then
     self:Hide()
   else
     self:Show()
@@ -41,6 +50,9 @@ end
 
 
 function Toolbox.Refresh(self)
+    Toolbox.Frame = Toolbox.Frame or _G["QDKP2_Frame3"]
+    SetAmounts.Frame = SetAmounts.Frame or _G["QDKP2_Frame4"]
+    if not Toolbox.Frame or not SetAmounts.Frame then return; end
     if not Toolbox.Frame:IsVisible() and not SetAmounts.Frame:IsVisible() then return; end
     Toolbox.EditPlayers=Toolbox.EditPlayers or {}
     if #Toolbox.EditPlayers<1 then return; end
@@ -110,7 +122,8 @@ end
 
 function Toolbox.Popup(self,name)
   self:SelectPlayer(name)
-  if not self.Frame:IsVisible() then self:Show(); end
+  self.Frame = self.Frame or _G["QDKP2_Frame3"]
+  if self.Frame and not self.Frame:IsVisible() then self:Show(); end
 end
 SetAmounts.Popup=Toolbox.Popup
 
@@ -236,7 +249,8 @@ end
 ---------------------- ShiftLink & DragDrop ----------------------------
 --This function is called whenever an itemlink is shift clicked.
 function Toolbox.ShiftClickItem(item)
-  if item and Toolbox.Frame:IsVisible() then
+  Toolbox.Frame = Toolbox.Frame or _G["QDKP2_Frame3"]
+  if item and Toolbox.Frame and Toolbox.Frame:IsVisible() then
     Toolbox:SetLootCharge(item)
     QDKP2frame3_dkpBox:SetFocus()
   elseif QDKP2frame6_ReasonBox:IsVisible() then

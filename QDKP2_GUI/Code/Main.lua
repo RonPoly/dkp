@@ -20,16 +20,25 @@ local myClass={}
 --Manages the main window
 --todo can be "show", "hide", "toggle" and "refresh"
 function myClass.Show(self)
+  if not self.Frame then
+    self.Frame = _G["QDKP2_Frame1"]
+  end
   QDKP2_Toggle(1,true)
   self:Refresh()
 end
 
 function myClass.Hide(self)
-   QDKP2_ToggleOffAfter(1,true)
+  if not self.Frame then
+    self.Frame = _G["QDKP2_Frame1"]
+  end
+  QDKP2_ToggleOffAfter(1,true)
 end
 
 function myClass.Toggle(self)
-   if self.Frame:IsVisible() then
+  if not self.Frame then
+    self.Frame = _G["QDKP2_Frame1"]
+  end
+   if self.Frame and self.Frame:IsVisible() then
      self:Hide()
    else
      self:Show()
@@ -37,7 +46,10 @@ function myClass.Toggle(self)
 end
 
 function myClass.Refresh(self)
-    if not self.Frame:IsVisible() then return; end
+    if not self.Frame then
+      self.Frame = _G["QDKP2_Frame1"]
+    end
+    if not self.Frame or not self.Frame:IsVisible() then return; end
     QDKP2_Debug(2, "Refresh","Refreshing Main Window")
     local EditMode=QDKP2_ManagementMode()
     local Session=QDKP2_IsManagingSession()

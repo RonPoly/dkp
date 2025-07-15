@@ -24,7 +24,6 @@ Code\Lib\Deformat-2.0.lua
 Code\Lib\LibRSA-1.0.lua
 
 Code\DefaultOptions.lua
-Code\Core\Costants.lua
 Code\Core\DKP_Editing.lua
 Code\Core\DKP_Management.lua
 Code\Core\Events.lua
@@ -45,7 +44,7 @@ Code\Core\Crypto.lua
 Local\enGB.lua
 Local\frFR.lua
 
-Code\Logging\Costants.lua
+Code\Logging\Constants.lua
 Code\Logging\LogEntry.lua
 Code\Logging\DB.lua
 Code\Logging\Logging.lua

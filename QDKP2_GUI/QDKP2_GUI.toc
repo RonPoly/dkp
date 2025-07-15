@@ -10,14 +10,14 @@
 
 Code\GUI.lua
 Code\Log.lua
-Code\Log.Player.Lua
-Code\main.lua
-Code\minimap_button.lua
+Code\Log.Player.lua
+Code\Main.lua
+Code\Minimap_button.lua
 Code\Misc.lua
 Code\Roster.lua
 Code\ToolBox.lua
 Code\AltEditor.lua
 Code\Init.lua
-code\LogEntryMod.lua
+Code\LogEntryMod.lua
 
 QDKP2_GUI.xml

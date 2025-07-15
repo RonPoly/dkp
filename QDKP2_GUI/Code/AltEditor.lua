@@ -1,3 +1,4 @@
+print("AltEditor.lua: File loaded.")
 local AltEditor = {}
 
 function AltEditor:OnLoad(frame)

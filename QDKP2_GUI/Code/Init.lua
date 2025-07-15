@@ -1,5 +1,6 @@
 ------------------------------------- INIT ----------------------------------
 function QDKP2GUI_Init()
+  print("Init.lua: QDKP2GUI_Init() started.")
   QDKP2_Events:RegisterCallback("TIMERBASE_UPDATED",function(...) QDKP2GUI_Main:TimerCountdownRefresh(...); end)
   QDKP2_Events:RegisterCallback("DATA_UPDATED",QDKP2GUI_UpdateManager)
   QDKP2_Events:RegisterCallback("TIMER_START",function(...) QDKP2GUI_Main:Refresh(); end)
@@ -19,6 +20,7 @@ function QDKP2GUI_Init()
   QDKP2_Events:RegisterCallback("BID_CLOSE",function(...) QDKP2GUI_Roster:Refresh(); end)
   QDKP2_Events:RegisterCallback("BID_CANCEL",function(...) QDKP2GUI_Roster:Refresh(); end)
   QDKP2_Events:RegisterCallback("LOAD",QDKP2GUI_OnLoad)
+  print("Init.lua: QDKP2GUI_Init() finished.")
 end
 
 ------------------------------------- ON LOAD ----------------------------------------

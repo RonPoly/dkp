@@ -9,13 +9,16 @@
   <Frame name="QDKP2GUI">
     <Scripts>
       <OnLoad>
+        print("QDKP2_GUI.xml: OnLoad started.")
         tinsert(UISpecialFrames,"QDKP2_Frame1");
         tinsert(UISpecialFrames,"QDKP2_Frame2");
         tinsert(UISpecialFrames,"QDKP2_Frame3");
         tinsert(UISpecialFrames,"QDKP2_Frame4");
         tinsert(UISpecialFrames,"QDKP2_Frame5");
         tinsert(UISpecialFrames,"QDKP2_Frame6");
+        print("QDKP2_GUI.xml: UISpecialFrames registered.")
         QDKP2GUI_Init();
+        print("QDKP2_GUI.xml: OnLoad finished.")
       </OnLoad>
     </Scripts>
   </Frame>

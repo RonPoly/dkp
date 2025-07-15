@@ -47,23 +47,32 @@ value = 50,
 -------------------- Window management ----------------------
 
 function myClass.OnLoad(self)
-  self.Frame=QDKP2_Frame2
-  self.MenuFrame = CreateFrame("Frame", "QDKP2_Frame2_DropDownMenu", self.Frame , "UIDropDownMenuTemplate")
-  self.SubMenuFrame = CreateFrame("Frame", "QDKP2_Frame2_DropDownMenu", self.MenuFrame , "UIDropDownMenuTemplate")
+  -- "self" is the frame object passed by XML at load time.  Store it so we can
+  -- reference it safely even if globals are not yet available.
+  self.Frame = self
+  self.MenuFrame = CreateFrame("Frame", "QDKP2_Frame2_DropDownMenu", self.Frame, "UIDropDownMenuTemplate")
+  self.SubMenuFrame = CreateFrame("Frame", "QDKP2_Frame2_DropDownMenu", self.MenuFrame, "UIDropDownMenuTemplate")
 end
 
 function myClass.Show(self)
+  -- Ensure we have a valid frame reference when the GUI hasn't been fully
+  -- initialised yet.
+  self.Frame = self.Frame or _G["QDKP2_Frame2"]
+  if not self.Frame then return end
   QDKP2_Toggle(2, true)
   QDKP2GUI_Roster:Refresh()
 end
 
 function myClass.Hide(self)
-  QDKP2_Frame2:Hide()
+  self.Frame = self.Frame or _G["QDKP2_Frame2"]
+  if not self.Frame then return end
+  self.Frame:Hide()
   myClass.SelectNone()
 end
 
 function myClass.Toggle(self)
-  if QDKP2_Frame2:IsVisible() then
+  self.Frame = self.Frame or _G["QDKP2_Frame2"]
+  if self.Frame and self.Frame:IsVisible() then
     self.Hide()
   else
     self.Show()
@@ -72,7 +81,8 @@ end
 
 
 function myClass.Refresh(self, forceResort)
-    if not QDKP2_Frame2:IsVisible() then return; end
+    self.Frame = self.Frame or _G["QDKP2_Frame2"]
+    if not self.Frame or not self.Frame:IsVisible() then return; end
     QDKP2_Debug(3, "GUI-roster","Refreshing")
     local Complete=QDKP2_OfficerMode()
     if Complete then
@@ -371,8 +381,11 @@ function myClass.ShowColumn(self, Column, todo)
     TitleColObj:SetWidth(0)
     SortButton:Hide()
   end
-  if reduce then QDKP2_Frame2:SetWidth(QDKP2_Frame2:GetWidth()-(width))
-  elseif expand then QDKP2_Frame2:SetWidth(QDKP2_Frame2:GetWidth()+(width))
+  self.Frame = self.Frame or _G["QDKP2_Frame2"]
+  if self.Frame then
+    if reduce then self.Frame:SetWidth(self.Frame:GetWidth()-(width))
+    elseif expand then self.Frame:SetWidth(self.Frame:GetWidth()+(width))
+    end
   end
 end
 
